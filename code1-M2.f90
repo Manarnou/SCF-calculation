@@ -39,7 +39,7 @@ program homework
   !
   allocate( d_id(N) )
 
-  A(1)=1.45d0 ; A(2)=2.9d0 
+  A(1)=1.45d0 ; A(2)=2.9d0        ! Slater coefficients 
 
   ! ######### the overlap matrix before diagolanization ################
 
@@ -97,7 +97,7 @@ program homework
   end do
 
 
- !################## Sbar power -1/2 #################@
+ !################## computing Sbar (eigen values) and Sbar power -1/2 #################@
   do i=1 ,N
     Sbp(i,i)=1.0d0/sqrt(abs(Sbar(i,i)))
   end do
@@ -114,7 +114,8 @@ program homework
   end do
 
 
-! ########### hpq and (pq/rs) ###############
+! ########### computing hpq and (pq|rs) integrals using the analytic forms ###############
+!    hpq is the one-electron Hamiltonian  and (pq|rs) is two-electron repulsion integral, represents the interaction between two pairs of orbitals
   do i=1, N
      do j=1, N
         h(i,j)=4.0d0*((sqrt(A(i)*A(j))/(A(i)+A(j)))**3)*((A(i)*A(j))-2.0d0*((A(i)+A(j))))
@@ -159,7 +160,7 @@ program homework
   end do 
 
 
-!#############################@ EXERCISE 2      ##################################@
+!#############################@ EXERCISE 2: Iterative SCF process, computing the fock matrix and total Energies ##################################@
   E=0
   E_old=2.0d0
   coeff=0.0d0
@@ -305,7 +306,7 @@ program homework
   
   end do        !!!!!!!! END WHILE LOOP. ####################################
  
-  ! #####################@ printing all results ##################
+  ! ##################### printing all results ##################
   write(*,*) 'iter    c1             c2             F11             F12             F22             min(e)             E'  
   
   do i=1,iter
@@ -313,7 +314,7 @@ program homework
   end do 
   
 
-  ! ##############@ The deviation % from Snow and Bills data  ###############
+  ! ##############@ validation of results: The deviation % from Snow and Bills data  ###############
 
   write(*,*)
   write(*,*) "Results compared to Snow and Bills' data"
